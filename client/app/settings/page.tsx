@@ -56,7 +56,7 @@ export default function SettingsPage() {
     setSuccess(false);
     try {
       const res = await api.patch('/api/user/profile', { username, bio });
-      setUser((prev: any) => ({ ...prev, ...res.data }));
+      setUser((prev) => prev ? { ...prev, ...res.data } : null);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err: any) {

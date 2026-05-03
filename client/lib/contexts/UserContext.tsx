@@ -7,7 +7,7 @@ import { User } from '../../types';
 interface UserContextType {
   user: User | null;
   loading: boolean;
-  setUser: (user: User | null) => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
