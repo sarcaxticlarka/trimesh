@@ -46,3 +46,37 @@ export const unsaveModel = async (req: Request, res: Response): Promise<void> =>
 
   res.status(200).json({ message: 'Removed from saved' });
 };
+
+export const updateProfile = async (req: Request, res: Response): Promise<void> => {
+  const userId = (req as any).user?.id;
+  const { username, bio } = req.body;
+
+  if (!username?.trim()) {
+    res.status(400).json({ message: 'Username is required' });
+    return;
+  }
+
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: { username: username.trim(), bio: bio?.trim() || null },
+    select: { id: true, email: true, username: true, bio: true },
+  });
+
+  res.status(200).json(user);
+};
+
+export const getStats = async (req: Request, res: Response): Promise<void> => {
+  const userId = (req as any).user?.id;
+
+  const [uploadCount, savedCount, totalDownloads] = await Promise.all([
+    prisma.model.count({ where: { userId } }),
+    prisma.savedModel.count({ where: { userId } }),
+    prisma.model.aggregate({ where: { userId }, _sum: { downloadCount: true } }),
+  ]);
+
+  res.status(200).json({
+    uploads: uploadCount,
+    saved: savedCount,
+    totalDownloads: totalDownloads._sum.downloadCount ?? 0,
+  });
+};
