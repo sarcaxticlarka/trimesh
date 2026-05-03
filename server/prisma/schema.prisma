@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String
+  password  String
+  bio       String?
+  createdAt DateTime @default(now())
+
+  models Model[]
+  saved  SavedModel[]
+}
+
+model Model {
+  id            String   @id @default(uuid())
+  title         String
+  description   String
+  category      String
+  previewImage  String
+  fileUrl       String?
+  tags          String[]
+  downloadCount Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  userId String
+  user   User         @relation(fields: [userId], references: [id])
+  saved  SavedModel[]
+}
+
+model SavedModel {
+  id        String   @id @default(uuid())
+  userId    String
+  modelId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  model Model @relation(fields: [modelId], references: [id])
+
+  @@unique([userId, modelId])
+}

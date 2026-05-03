@@ -1,0 +1,6 @@
+2026-05-03T12:26:59.126Z [OPTIONS] /api/auth/signup - Origin: http://localhost:3000 - Host: localhost:4000
+2026-05-03T12:26:59.135Z [POST] /api/auth/signup - Origin: http://localhost:3000 - Host: localhost:4000
+2026-05-03T12:27:03.508Z [OPTIONS] /api/user/dashboard - Origin: http://localhost:3000 - Host: localhost:4000
+2026-05-03T12:27:03.517Z [GET] /api/user/dashboard - Origin: http://localhost:3000 - Host: localhost:4000
+2026-05-03T12:27:03.557Z [OPTIONS] /api/user/dashboard - Origin: http://localhost:3000 - Host: localhost:4000
+2026-05-03T12:27:05.881Z [GET] /api/user/dashboard - Origin: http://localhost:3000 - Host: localhost:4000
